@@ -7,7 +7,7 @@ import {
   VideoCameraOutlined,
   UploadOutlined,
 } from '@ant-design/icons'
-import './index.less'
+import styles from './index.less'
 
 const { Header, Sider, Content } = Layout
 
@@ -15,7 +15,7 @@ export default function BasicLayout() {
   const [collapsed, setCollapsed] = useState(false)
 
   return (
-    <Layout className="basic-layout">
+    <Layout className={styles.basicLayout}>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>

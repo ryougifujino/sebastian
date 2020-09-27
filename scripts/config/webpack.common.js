@@ -1,11 +1,12 @@
 const CopyPlugin = require('copy-webpack-plugin')
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin')
 const webpack = require('webpack')
-const { getStyleLoaders, getAssetRule, resolveApp } = require('../utils')
+const { getStyleLoaders, getAssetRule, getCSSModuleLocalIdent, resolveApp } = require('../utils')
 const { PROJECT_PATH } = require('../constants')
 
 const cssRegex = /\.css$/
 const lessRegex = /\.less$/
+const lessGlobalRegex = /\.global\.less/
 const imageRegex = /\.(bmp|gif|jpe?g|png)$/
 const fontRegex = /\.(ttf|woff|woff2|eot|otf)$/
 
@@ -45,11 +46,42 @@ module.exports = {
       },
       {
         test: cssRegex,
-        use: getStyleLoaders(1),
+        use: getStyleLoaders({
+          importLoaders: 1,
+          modules: {
+            localIdentName: getCSSModuleLocalIdent(),
+          },
+        }),
+        exclude: /node_modules/,
+      },
+      {
+        test: cssRegex,
+        use: getStyleLoaders({
+          importLoaders: 1,
+        }),
+        include: /node_modules/,
       },
       {
         test: lessRegex,
-        use: getStyleLoaders(2, 'less-loader'),
+        use: getStyleLoaders(
+          {
+            importLoaders: 2,
+            modules: {
+              localIdentName: getCSSModuleLocalIdent(),
+            },
+          },
+          'less-loader',
+        ),
+        exclude: lessGlobalRegex,
+      },
+      {
+        test: lessGlobalRegex,
+        use: getStyleLoaders(
+          {
+            importLoaders: 2,
+          },
+          'less-loader',
+        ),
       },
       getAssetRule(imageRegex, {
         limit: 5 * 1024,

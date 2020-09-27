@@ -1,5 +1,5 @@
 import React from 'react'
-import './App.less'
+import './App.global.less'
 import BasicLayout from 'layouts/BasicLayout'
 
 function App() {

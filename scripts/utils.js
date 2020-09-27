@@ -2,14 +2,14 @@ const { PROJECT_PATH, isDev } = require('./constants')
 const { resolve } = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
-const getStyleLoaders = (importLoaders, preProcessor) =>
+const getStyleLoaders = (cssOptions, preProcessor) =>
   [
     isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
     {
       loader: 'css-loader',
       options: {
         sourceMap: isDev,
-        importLoaders,
+        ...cssOptions,
       },
     },
     {
@@ -53,10 +53,19 @@ const getAssetRule = (test, extraOptions) => ({
   ],
 })
 
+const getCSSModuleLocalIdent = (function () {
+  const devIdent = '[path][name]__[local]--[hash:base64:5]'
+  const prodIdent = '[local]--[hash:base64:5]'
+  return function () {
+    return isDev ? devIdent : prodIdent
+  }
+})()
+
 const resolveApp = (relativePath) => resolve(PROJECT_PATH, relativePath)
 
 module.exports = {
   getStyleLoaders,
   getAssetRule,
+  getCSSModuleLocalIdent,
   resolveApp,
 }
