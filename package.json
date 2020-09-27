@@ -111,7 +111,9 @@
     "webpackbar": "^4.0.0"
   },
   "dependencies": {
+    "@ant-design/icons": "^4.2.2",
     "@babel/runtime-corejs3": "^7.11.2",
+    "antd": "^4.6.5",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   }

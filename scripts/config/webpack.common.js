@@ -66,6 +66,8 @@ module.exports = {
       '@': resolveApp('./src'),
       common: resolveApp('./src/common'),
       components: resolveApp('./src/components'),
+      layouts: resolveApp('./src/layouts'),
+      pages: resolveApp('./src/pages'),
       utils: resolveApp('./src/utils'),
     },
   },
