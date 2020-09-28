@@ -5,8 +5,6 @@ const { WEBPACK_PROGRESS_COLOR } = require('../constants')
 const WebpackBar = require('webpackbar')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const glob = require('glob')
-const PurgeCSSPlugin = require('purgecss-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 
@@ -34,10 +32,6 @@ module.exports = merge(common, {
       filename: 'css/[name].[contenthash].css',
       chunkFilename: 'css/[name].[contenthash].css',
       ignoreOrder: false,
-    }),
-    new PurgeCSSPlugin({
-      paths: glob.sync(`${resolveApp('./src')}/**/*.{tsx,less,css}`, { nodir: true }),
-      whitelist: ['html', 'body'],
     }),
   ],
   optimization: {
